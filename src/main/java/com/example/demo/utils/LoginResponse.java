@@ -1,17 +1,12 @@
 package com.example.demo.utils;
 
+
+import lombok.Builder;
+import lombok.Getter;
+
+// login response type
+@Getter
+@Builder
 public class LoginResponse {
-    private String accessToken;
-
-    public LoginResponse(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+    private final String accessToken;
 }

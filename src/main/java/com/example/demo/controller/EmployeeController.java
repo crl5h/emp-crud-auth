@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.EmployeeEntity;
+import com.example.demo.security.UserPrincipal;
 import com.example.demo.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //jpa repo(db)
 
 @RestController
+@RequiredArgsConstructor
 public class EmployeeController {
 
     @Autowired
@@ -23,8 +27,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/pvt")
-    public String test(){
-        return "Private page";
+    public String pvt(@AuthenticationPrincipal UserPrincipal principal){
+        return "Private page working with jwt "
+                + principal.getUserId().toString()
+                + " "
+                + principal.getEmail();
     }
 
     @ResponseBody
