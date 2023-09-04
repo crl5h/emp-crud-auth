@@ -6,7 +6,9 @@ import com.example.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -28,10 +30,8 @@ public class EmployeeController {
 
     @GetMapping("/pvt")
     public String pvt(@AuthenticationPrincipal UserPrincipal principal){
-        return "Private page working with jwt "
-                + principal.getUserId().toString()
-                + " "
-                + principal.getEmail();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName()+auth.getDetails();
     }
 
     @ResponseBody

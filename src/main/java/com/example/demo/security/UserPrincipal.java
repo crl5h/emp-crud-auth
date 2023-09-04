@@ -9,13 +9,13 @@ import java.util.Collection;
 
 @Getter
 @Builder
+// user
 public class UserPrincipal implements UserDetails {
 
     private final Long userId;
     private final String email;
-    // works..?
-    private final Collection<? extends GrantedAuthority> authorities;
 
+    private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

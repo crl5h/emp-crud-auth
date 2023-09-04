@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+// This extracts info from jwt and converts it into an userPrincipal type object
 public class JwtToPrincipalConverter {
-    public UserPrincipal convertToPrincipal(DecodedJWT jwt){
+    public UserPrincipal convertToPrincipal(DecodedJWT jwt) {
         return UserPrincipal.builder()
                 .userId(Long.valueOf(jwt.getSubject()))
                 .email(jwt.getClaim("e").asString())
@@ -18,9 +19,9 @@ public class JwtToPrincipalConverter {
     }
 
 
-    private List<SimpleGrantedAuthority> extractAuthoritiesFromClaim(DecodedJWT jwt){
-        Claim claim  = jwt.getClaim("a");
-        if(claim.isNull() || claim.isMissing()){
+    private List<SimpleGrantedAuthority> extractAuthoritiesFromClaim(DecodedJWT jwt) {
+        Claim claim = jwt.getClaim("a");
+        if (claim.isNull() || claim.isMissing()) {
             return List.of();
         }
         return claim.asList(SimpleGrantedAuthority.class);

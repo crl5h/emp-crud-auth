@@ -15,11 +15,7 @@ import java.util.List;
 public class JwtIssuer {
     private final JwtProperties jwtProperties;
 
-//    public JwtIssuer(JwtProperties jwtProperties) {
-//        this.jwtProperties = jwtProperties;
-//    }
-
-    public String issue(long uid, String email, List<String> roles){
+    public String issue(long uid, String email, List<String> roles) {
         return JWT.create()
                 .withSubject(String.valueOf(uid))
                 .withExpiresAt(Instant.now().plus(Duration.of(30, ChronoUnit.MINUTES)))

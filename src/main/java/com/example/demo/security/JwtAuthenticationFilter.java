@@ -16,7 +16,6 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final JwtDecoder jwtDecoder;
     private final JwtToPrincipalConverter jwtToPrincipalConverter;
 
@@ -25,7 +24,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException
     {
         extractTokenFromRequest(request)
-                .map(jwtDecoder::decode)
+                .map(jwtDecoder::decode) // .map(decodedJWT -> jwtDecoder.decode(decodedJWT))
+
                 .map(jwtToPrincipalConverter::convertToPrincipal)
                 .map(UserPrincipalAuthenticationToken::new)
                 .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
