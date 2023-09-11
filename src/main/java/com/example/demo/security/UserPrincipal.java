@@ -1,11 +1,13 @@
 package com.example.demo.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Builder
@@ -13,9 +15,13 @@ import java.util.Collection;
 public class UserPrincipal implements UserDetails {
 
     private final Long userId;
-    private final String email;
 
-    private final Collection<? extends GrantedAuthority> authorities;
+    private final String email;
+    private final String username;
+    @JsonIgnore
+    private final String password;
+
+    private final List<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -24,12 +30,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

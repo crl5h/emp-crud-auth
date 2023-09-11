@@ -6,38 +6,31 @@ import com.example.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-//jpa repo(db)
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class EmployeeController {
 
     @Autowired
     @Qualifier("impl1")
     private EmployeeService employeeService;
 
-    @GetMapping("/")
-    public String func(){
-//        System.out.println("works");
-        return "works";
+
+    @GetMapping("/profile")
+    public String profile(@AuthenticationPrincipal UserPrincipal principal){
+        if(principal!=null){
+            return "ID: "+principal.getUserId()+principal.getEmail()+principal.getUsername();
+        }return "oops";
     }
 
-    @GetMapping("/pvt")
-    public String pvt(@AuthenticationPrincipal UserPrincipal principal){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth.getName()+auth.getDetails();
-    }
-
-    @ResponseBody
     @GetMapping("/get")
     public List<EmployeeEntity> getEmployee(){
-        // System.out.println(employeeService.getAll());
         return employeeService.getAll();
     }
 

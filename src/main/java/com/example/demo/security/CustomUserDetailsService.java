@@ -1,8 +1,8 @@
 package com.example.demo.security;
 
+import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,10 +19,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var userFromDb = userService.findUserFromDb(email);
+        UserEntity userFromDb = userService.findUserFromDb(email).get();
+        // building the userPrincipal from db
         return UserPrincipal.builder()
                 .userId(userFromDb.getId())
                 .email(userFromDb.getEmail())
+                .username(userFromDb.getUsername())
+                .password(userFromDb.getPassword())
                 .authorities(List.of(new SimpleGrantedAuthority(userFromDb.getRole())))
                 .build();
     }

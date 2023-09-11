@@ -15,12 +15,13 @@ import java.util.List;
 public class JwtIssuer {
     private final JwtProperties jwtProperties;
 
-    public String issue(long uid, String email, List<String> roles) {
+    public String issue(long uid, String email, String username,List<String> roles) {
         return JWT.create()
                 .withSubject(String.valueOf(uid))
                 .withExpiresAt(Instant.now().plus(Duration.of(30, ChronoUnit.MINUTES)))
                 .withClaim("e", email)
                 .withClaim("a", roles)
+                .withClaim("u",username)
                 .sign(Algorithm.HMAC256(jwtProperties.getSecretKey()));
     }
 }
