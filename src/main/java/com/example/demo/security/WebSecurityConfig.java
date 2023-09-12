@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,18 +34,31 @@ public class WebSecurityConfig {
         http
                 .cors().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Authentication object is removed when the request has been processed
                 .and()
                 .formLogin().disable()
                 .authorizeHttpRequests(
                         (authz) -> authz
                                 .antMatchers("/", "/auth/**").permitAll()
-                                .antMatchers("/api/**").hasAnyRole("ADMIN","USER")
+                                .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated()
                 ).exceptionHandling()
                 .and()
                 .httpBasic();
+
+        http.authenticationProvider(authenticationProvider());
+
         return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(customUserDetailsService);
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+
+        return authProvider;
     }
 
     @Bean
@@ -52,12 +66,11 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Authentication manager for authenticating user with email,password
+     */
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                // for loading user information during authentication from customUserDetailsService
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder())
-                .and().build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }
