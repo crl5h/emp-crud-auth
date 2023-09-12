@@ -27,13 +27,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .map(jwtDecoder::decode) // .map(decodedJWT -> jwtDecoder.decode(decodedJWT))
 
                 .map(jwtToPrincipalConverter::convertToPrincipal)
-                .map(UserPrincipalAuthenticationToken::new)
+                .map(UserPrincipalAuthenticationToken::new) // we are passing the UserPrincipal from the above line in UserPrincipalAuthenticationToken constructor.
                 .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
 
         filterChain.doFilter(request,response); // gets invoked for each incoming HTTP request
 
     }
 
+    /**
+     * Extracts an authentication token from an incoming HTTP request's "Authorization" header.
+     * @param request The HttpServletRequest representing the incoming HTTP request.
+     * @return An Optional containing the extracted authentication token if found, or an empty Optional if not present.
+     */
     private Optional<String> extractTokenFromRequest(HttpServletRequest request){
         if(request.getHeader("Authorization") == null){
             return Optional.empty();

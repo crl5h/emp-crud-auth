@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-// This extracts info from jwt and converts it into an userPrincipal type object
 public class JwtToPrincipalConverter {
+    /**
+     * Extracts info from jwt and converts it into an userPrincipal(id,email,username,authorities) type object
+     * @return UserPrincipal object extracted from decodedJWT
+     */
     public UserPrincipal convertToPrincipal(DecodedJWT jwt) {
         return UserPrincipal.builder()
                 .userId(Long.valueOf(jwt.getSubject()))
@@ -19,7 +22,11 @@ public class JwtToPrincipalConverter {
                 .build();
     }
 
-
+    /**
+     * Extracts user authorities from a JWT claim.
+     * @param jwt The DecodedJWT representing the decoded JWT containing user authorities.
+     * @return A list of SimpleGrantedAuthority objects extracted from the JWT claim, or an empty list if the claim is missing or null.
+     */
     private List<SimpleGrantedAuthority> extractAuthoritiesFromClaim(DecodedJWT jwt) {
         Claim claim = jwt.getClaim("a");
         if (claim.isNull() || claim.isMissing()) {

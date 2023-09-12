@@ -9,6 +9,10 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 public class UserPrincipalAuthenticationToken extends AbstractAuthenticationToken {
 
     private final UserPrincipal principal;
+    /**
+     * authentication token object for the current user principal
+     * @param principal user principal
+     */
     public UserPrincipalAuthenticationToken(UserPrincipal principal) {
         super(principal.getAuthorities());
         this.principal = principal;

@@ -19,23 +19,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-        private final JwtIssuer jwtIssuer;
-        private final AuthenticationManager authenticationManager;
+    private final JwtIssuer jwtIssuer;
+    private final AuthenticationManager authenticationManager;
 
-        public ResponseEntity<LoginResponse> loginUser(String email, String password){
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, password)
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+    public ResponseEntity<LoginResponse> loginUser(String email, String password){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
 
-            List<String> roles = principal.getAuthorities()
-                    .stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
+        List<String> roles = principal.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
 
-            String token = jwtIssuer.issue(principal.getUserId(), principal.getEmail(),principal.getUsername(),roles);
-            return ResponseEntity.ok(LoginResponse.builder().accessToken(token).build());
-        }
+        String token = jwtIssuer.issue(principal.getUserId(), principal.getEmail(),principal.getUsername(),roles);
+        return ResponseEntity.ok(LoginResponse.builder().accessToken(token).build());
+    }
 }
