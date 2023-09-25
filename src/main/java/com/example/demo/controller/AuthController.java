@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthService;
 import com.example.demo.utils.LoginRequest;
@@ -25,8 +25,8 @@ public class AuthController {
         return authService.loginUser(request.getEmail(), request.getPassword());
     }
 
-    @PostMapping("/auth/signup")
-    public void signup(@RequestBody UserEntity userEntity) {
+    @PostMapping("/signup")
+    public void signup(@RequestBody User userEntity) {
         String password = passwordEncoder.encode(userEntity.getPassword());
         userEntity.setPassword(password);
         userRepository.save(userEntity);

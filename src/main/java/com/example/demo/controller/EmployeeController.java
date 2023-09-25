@@ -21,11 +21,10 @@ public class EmployeeController {
     @Qualifier("impl1")
     private EmployeeService employeeService;
 
-
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal UserPrincipal principal){
         if(principal!=null){
-            return "ID: "+principal.getUserId()+principal.getEmail()+principal.getUsername();
+            return "ID: "+principal.getAuthorities()+principal.getUsername();
         }return "oops";
     }
 
