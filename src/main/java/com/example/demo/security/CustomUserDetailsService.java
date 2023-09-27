@@ -1,6 +1,5 @@
 package com.example.demo.security;
 
-import com.example.demo.entity.Permission;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserRoleGroup;
 import com.example.demo.repository.UserRepository;
@@ -25,11 +24,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(email);
         Set<UserRoleGroup> uz = user.getUserRoleGroups();
-        List<Permission> permissions = uz.stream()
-                .flatMap(userRoleGroup -> userRoleGroup.getPermissions().stream()
-                ).collect(Collectors.toList());
 
-        List<SimpleGrantedAuthority> authorities = permissions.stream()
+        List<SimpleGrantedAuthority> authorities = uz.stream()
+                .flatMap(userRoleGroup -> userRoleGroup.getPermissions().stream())
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
                 .collect(Collectors.toList());
 

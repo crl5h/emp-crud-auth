@@ -7,6 +7,7 @@ import com.example.demo.utils.LoginRequest;
 import com.example.demo.utils.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
