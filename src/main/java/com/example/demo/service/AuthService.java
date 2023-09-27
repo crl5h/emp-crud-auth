@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.security.JwtIssuer;
+import com.example.demo.jwt.JwtIssuer;
 import com.example.demo.security.UserPrincipal;
 import com.example.demo.utils.LoginResponse;
 import org.springframework.http.ResponseEntity;

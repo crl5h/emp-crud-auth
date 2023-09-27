@@ -25,14 +25,11 @@ public class EmployeeImpl implements EmployeeService{
     }
 
     public void addEmployee(EmployeeEntity employee){
-        // System.out.println(employee);
         empRepo.save(employee);
     }
 
     public void updateEmployee(int employeeId, EmployeeEntity UpdatedEmployee) {
         EmployeeEntity currEmp = empRepo.findById(employeeId).get();
-        currEmp.setDepartmentName(UpdatedEmployee.getDepartmentName());
-        currEmp.setMobileNumber(UpdatedEmployee.getMobileNumber());
         currEmp.setName(UpdatedEmployee.getName());
         currEmp.setSalary(UpdatedEmployee.getSalary());
         empRepo.save(currEmp);

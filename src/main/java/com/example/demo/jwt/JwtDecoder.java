@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

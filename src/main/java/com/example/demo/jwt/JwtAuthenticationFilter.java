@@ -1,5 +1,6 @@
-package com.example.demo.security;
+package com.example.demo.jwt;
 
+import com.example.demo.security.UserPrincipalAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
