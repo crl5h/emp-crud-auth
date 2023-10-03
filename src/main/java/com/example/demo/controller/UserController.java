@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/user")
+@RequestMapping("/api/user")
 public class UserController {
     // entity used : "USER"
     // permissions: ["CREATE@USER", "DELETE@USER", "VIEW@USER"]

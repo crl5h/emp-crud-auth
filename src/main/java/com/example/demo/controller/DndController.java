@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/dnd")
+@RequestMapping("/api/dnd")
 public class DndController {
 
     @PostMapping("/create")

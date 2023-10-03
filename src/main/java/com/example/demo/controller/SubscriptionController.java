@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/sub")
+@RequestMapping("/api/sub")
 public class SubscriptionController {
     // entity used : "SUBSCRIPTION"
     // permissions: ["CREATE@SUBSCRIPTION", "DELETE@SUBSCRIPTION", "VIEW@SUBSCRIPTION"]
@@ -24,7 +24,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/view")
-    @PreAuthorize("hasPermission('', 'SUBSCRIPTION', 'SUBSCRIPTION_VIEW')")
+    @PreAuthorize("hasPermission('', 'SUBSCRIPTION', 'VIEW@SUBSCRIPTION')")
     public String viewSubscription() {
         return "Subscription viewed";
     }
