@@ -9,12 +9,6 @@ import java.io.Serializable;
 public class CustomPreAuth implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication auth, Object targetDomainObject, Object permission) {
-//        if ((auth == null) || (targetDomainObject == null) || !(permission instanceof String)) {
-//            return false;
-//        }
-//        String targetType = targetDomainObject.getClass().getSimpleName().toUpperCase();
-//        System.out.println(targetType);
-        System.out.println("Works1");
         return false;
     }
 
@@ -23,9 +17,6 @@ public class CustomPreAuth implements PermissionEvaluator {
         if ((auth == null) || (targetType == null) || !(permission instanceof String)) {
             return false;
         }
-
-        System.out.println(auth.getAuthorities());
-        System.out.println(targetType + " " + permission);
 
         for (GrantedAuthority u_auth : auth.getAuthorities()) {
             if (u_auth.getAuthority().equals(permission)) {

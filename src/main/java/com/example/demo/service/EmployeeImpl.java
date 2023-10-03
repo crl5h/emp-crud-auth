@@ -1,20 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.entity.EmployeeEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
+import com.example.demo.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-//@Primary
-@Qualifier("impl1")
+@RequiredArgsConstructor
 public class EmployeeImpl implements EmployeeService{
-    @Autowired
-    private EmployeeRepository empRepo;
+    private final EmployeeRepository empRepo;
 
     public List<EmployeeEntity> getAll(){
         return empRepo.findAll();

@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v2/sub")
 public class SubscriptionController {
     // entity used : "SUBSCRIPTION"
-    // permissions: ["SUBSCRIPTION_CREATE", "SUBSCRIPTION_DELETE", "SUBSCRIPTION_VIEW"]
+    // permissions: ["CREATE@SUBSCRIPTION", "DELETE@SUBSCRIPTION", "VIEW@SUBSCRIPTION"]
     @PostMapping("/create")
-    @PreAuthorize("hasPermission('', 'SUBSCRIPTION', 'SUBSCRIPTION_CREATE')")
+    @PreAuthorize("hasPermission('', 'SUBSCRIPTION', 'CREATE@SUBSCRIPTION')")
     public String createSubscription() {
         return "subscription created";
     }
 
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasPermission(id, 'SUBSCRIPTION', 'SUBSCRIPTION_DELETE')")
+    @PreAuthorize("hasPermission('', 'SUBSCRIPTION', 'DELETE@SUBSCRIPTION')")
     public String deleteSubscription(@PathVariable("id") int id) {
         return "Subscription Deleted";
     }

@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v2/user")
 public class UserController {
     // entity used : "USER"
-    // permissions: ["USER_CREATE", "USER_DELETE", "USER_VIEW"]
+    // permissions: ["CREATE@USER", "DELETE@USER", "VIEW@USER"]
 
     @PostMapping("/create")
-    @PreAuthorize("hasPermission('', 'USER', 'USER_CREATE')")
+    @PreAuthorize("hasPermission('', 'USER', 'CREATE@USER')")
     public String createUser() {
         return "User Created";
     }
 
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasPermission('', 'USER', 'USER_DELETE')")
+    @PreAuthorize("hasPermission('', 'USER', 'DELETE@USER')")
     public String deleteUser(@PathVariable("id") int id) {
         return "User Deleted";
     }
 
     @GetMapping("/view/{id}")
-    @PreAuthorize("hasPermission(id, 'USER', 'USER_VIEW')")
+    @PreAuthorize("hasPermission('','EMPLOYEE','CREATE@USER') or hasPermission('','EMPLOYEE','VIEW@USER')")
     public String viewUser(@PathVariable("id") int id) {
         return "user "+id+" viewed";
     }

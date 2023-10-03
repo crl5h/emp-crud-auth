@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 public class DndController {
 
     @PostMapping("/create")
-    @PreAuthorize("hasPermission('', 'DND', 'DND_CREATE')")
+    @PreAuthorize("hasPermission('', 'DND', 'CREATE@DND')")
     public String createDnd() {
         return "dnd created";
     }
 
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasPermission(id, 'DND', 'DND_DELETE')")
+    @PreAuthorize("hasPermission('', 'DND', 'DELETE@DND')")
     public String deleteDnd(@PathVariable("id") int id) {
         return "dnd deleted";
     }
 
     @GetMapping("/view")
-    @PreAuthorize("hasPermission('', 'DND', 'DND_VIEW')")
+    @PreAuthorize("hasPermission('', 'DND', 'VIEW@DND') or hasPermission('', 'DND', 'CREATE@DND')")
     public String viewDnd() {
         return "dnd_viewed";
     }

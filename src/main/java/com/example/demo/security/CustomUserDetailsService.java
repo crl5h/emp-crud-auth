@@ -30,6 +30,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
                 .collect(Collectors.toList());
 
+        // for role
+        Set<UserRoleGroup> userRoleGroups = user.getUserRoleGroups();
+        for (UserRoleGroup u : userRoleGroups) {
+            authorities.add(new SimpleGrantedAuthority(u.getRoleName()));
+        }
         // building the userPrincipal from db
         return UserPrincipal.builder()
                 .userId(user.getId())

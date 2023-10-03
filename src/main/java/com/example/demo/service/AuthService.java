@@ -22,7 +22,7 @@ public class AuthService {
     private final JwtIssuer jwtIssuer;
     private final AuthenticationManager authenticationManager;
 
-    public ResponseEntity<LoginResponse> loginUser(String email, String password){
+    public ResponseEntity<?> loginUser(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
         );

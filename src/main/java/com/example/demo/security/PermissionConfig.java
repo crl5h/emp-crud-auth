@@ -17,7 +17,6 @@ public class PermissionConfig extends GlobalMethodSecurityConfiguration {
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler meh = new DefaultMethodSecurityExpressionHandler();
         meh.setPermissionEvaluator(new CustomPreAuth());
-        System.out.println("meh");
         return meh;
     }
 }
