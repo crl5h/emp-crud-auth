@@ -35,13 +35,10 @@ public class WebSecurityConfig {
                 .formLogin().disable()
                 .authorizeHttpRequests(
                         (authz) -> authz
-                                .antMatchers("/", "/auth/**").permitAll()
+                                .antMatchers("/auth/**").permitAll()
                                 .antMatchers("/api/**").permitAll()
                                 .anyRequest().authenticated()
-                ).exceptionHandling()
-                .and()
-                .httpBasic();
-
+                ).exceptionHandling();
         http.authenticationProvider(authenticationProvider());
 
         return http.build();
